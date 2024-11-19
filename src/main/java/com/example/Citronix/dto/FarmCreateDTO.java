@@ -1,37 +1,23 @@
-package com.example.Citronix.model;
+package com.example.Citronix.dto;
 
-import jakarta.persistence.*;
-
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.Data;
 
 import java.time.LocalDate;
 
-
 @Data
-@Entity
-@Table(name = "farms")
+public class FarmCreateDTO {
 
-public class Farm {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-@Column(name = "name", nullable = false)
+    @NotNull(message = "Le nom de la ferme est obligatoire.")
     private String name;
-@Column(name = "location")
-private String location;
 
-@Column(name = "area")
+    private String location;
+
+    @Positive(message = "La surface doit être un nombre positif.")
     private Double area;
-@Column(name = "creation_date")
-private LocalDate creationDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private LocalDate creationDate;
 
     public String getName() {
         return name;
@@ -64,4 +50,6 @@ private LocalDate creationDate;
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+
+
 }
