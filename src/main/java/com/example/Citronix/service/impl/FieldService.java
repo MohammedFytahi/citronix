@@ -68,6 +68,15 @@ public class FieldService implements FieldServiceInterface {
 
         return fieldRepository.save(field);
     }
+
+    @Transactional
+    public void deleteField(Long id){
+        if(!fieldRepository.existsById(id)){
+            throw new RuntimeException("Field with ID " + id + " does not exist");
+        }
+
+        fieldRepository.deleteById(id);
+    }
     }
 
 

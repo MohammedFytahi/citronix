@@ -32,4 +32,10 @@ public class FieldController {
         Field updatedField = fieldService.updateField(fieldUpdateDTO);
         return ResponseEntity.ok("Field updated successfully");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteField(@PathVariable Long id) {
+        fieldService.deleteField(id);
+        return ResponseEntity.ok("Field deleted successfully");
+    }
 }
