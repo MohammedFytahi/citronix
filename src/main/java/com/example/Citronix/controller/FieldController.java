@@ -1,6 +1,7 @@
 package com.example.Citronix.controller;
 
 import com.example.Citronix.dto.FieldCreateDTO;
+import com.example.Citronix.dto.FieldDTO;
 import com.example.Citronix.dto.FieldUpdateDTO;
 import com.example.Citronix.model.Field;
 import com.example.Citronix.service.impl.FieldService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/fields")
@@ -37,5 +40,11 @@ public class FieldController {
     public ResponseEntity<String> deleteField(@PathVariable Long id) {
         fieldService.deleteField(id);
         return ResponseEntity.ok("Field deleted successfully");
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FieldDTO>> getAllFields(){
+        List<FieldDTO> fields = fieldService.getAllFields();
+        return ResponseEntity.ok(fields);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.Citronix.service.impl;
 
+import com.example.Citronix.dto.FarmDTO;
 import com.example.Citronix.dto.FieldCreateDTO;
+import com.example.Citronix.dto.FieldDTO;
 import com.example.Citronix.dto.FieldUpdateDTO;
 import com.example.Citronix.mapper.FieldMapper;
 import com.example.Citronix.model.Farm;
@@ -11,6 +13,9 @@ import com.example.Citronix.service.interf.FieldServiceInterface;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FieldService implements FieldServiceInterface {
@@ -76,6 +81,19 @@ public class FieldService implements FieldServiceInterface {
         }
 
         fieldRepository.deleteById(id);
+    }
+
+    public List<FieldDTO> getAllFields() {
+        return fieldRepository.findAll()
+                .stream()
+                .map(field -> FieldDTO.builder()
+                        .id(field.getId())
+                        .name(field.getName())
+
+                        .area(field.getArea())
+                        .farmId(field.getFarm().getId())
+                        .build())
+                .collect(Collectors.toList());
     }
     }
 
