@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,10 +27,11 @@ public class FarmService implements FarmeServiceInterface {
 
     public void addFarm(FarmCreateDTO farmCreateDTO) {
         Farm farm = FarmMapper.INSTANCE.toEntity(farmCreateDTO);
-        // Ajouter la date de création si elle est absente
+
+
         farm.setCreationDate(farmCreateDTO.getCreationDate() != null ? farmCreateDTO.getCreationDate() : LocalDate.now());
 
-        // Enregistrer l'entité
+
         farmRepository.save(farm);
 
 
@@ -37,11 +40,11 @@ public class FarmService implements FarmeServiceInterface {
     @Override
     @Transactional
     public void updateFarm(Long id, FarmUpdateDTO farmUpdateDTO) {
-        // Récupérer la ferme existante
+
         Farm existingFarm = farmRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Farm not found"));
 
-        // Mapper les données du DTO vers l'entité existante
+
         if (farmUpdateDTO.getName() != null) {
             existingFarm.setName(farmUpdateDTO.getName());
         }
@@ -53,7 +56,7 @@ public class FarmService implements FarmeServiceInterface {
         }
 
 
-        // Sauvegarder les modifications
+
         farmRepository.save(existingFarm);
     }
 
@@ -62,5 +65,28 @@ public class FarmService implements FarmeServiceInterface {
         return FarmMapper.INSTANCE.farmToFarmDTO(farm);
     }
 
+    @Transactional
+    public void deleteFarm(Long id) {
+
+        if (!farmRepository.existsById(id)) {
+            throw new RuntimeException("Farm with ID " + id + " does not exist");
+        }
+
+        farmRepository.deleteById(id);
+    }
+
+
+    public List<FarmDTO> getAllFarms() {
+        return farmRepository.findAll()
+                .stream()
+                .map(farm -> FarmDTO.builder()
+                        .id(farm.getId())
+                        .name(farm.getName())
+                        .location(farm.getLocation())
+                        .area(farm.getArea())
+                        .creationDate(farm.getCreationDate())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
 }
