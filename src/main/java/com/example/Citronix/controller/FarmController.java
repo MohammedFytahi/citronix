@@ -21,8 +21,13 @@ public class FarmController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addFarm(@Valid @RequestBody FarmCreateDTO farmCreateDTO) {
-        farmService.addFarm(farmCreateDTO);
+    public ResponseEntity<String> addFarm(@Valid @RequestBody FarmCreateDTO farmCreateDTO) {
+        try {
+            farmService.addFarm(farmCreateDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Ferme créée avec succès");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur interne s'est produite: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")

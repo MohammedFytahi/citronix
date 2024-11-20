@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Data
@@ -25,5 +26,12 @@ private String location;
 @Column(name = "creation_date")
 private LocalDate creationDate;
 
+
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Field> fields;
+
+    public Double calculateTotalFieldArea() {
+        return fields.stream().mapToDouble(Field::getArea).sum();
+    }
 
 }
