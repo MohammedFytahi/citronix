@@ -1,11 +1,10 @@
 package com.example.Citronix.repository;
 
-
-import com.example.Citronix.model.Farm;
+import com.example.Citronix.model.Field;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FarmRepository extends JpaRepository<Farm, Long> {
-    boolean existsByName(String name);
+public interface FieldRepository extends JpaRepository<Field,Long> {
+    long countByFarmId(Long farmId);
 }
