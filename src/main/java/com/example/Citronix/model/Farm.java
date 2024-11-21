@@ -27,8 +27,9 @@ private String location;
 private LocalDate creationDate;
 
 
-    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Field> fields;
+
 
     public Double calculateTotalFieldArea() {
         return fields.stream().mapToDouble(Field::getArea).sum();

@@ -1,9 +1,9 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.FarmDTO;
 import com.example.Citronix.dto.FieldCreateDTO;
 import com.example.Citronix.dto.FieldDTO;
 import com.example.Citronix.dto.FieldUpdateDTO;
+import com.example.Citronix.dto.farm.FarmSummaryDTO;
 import com.example.Citronix.mapper.FieldMapper;
 import com.example.Citronix.model.Farm;
 import com.example.Citronix.model.Field;
@@ -89,9 +89,12 @@ public class FieldService implements FieldServiceInterface {
                 .map(field -> FieldDTO.builder()
                         .id(field.getId())
                         .name(field.getName())
-
                         .area(field.getArea())
-                        .farmId(field.getFarm().getId())
+                        .farm(FarmSummaryDTO.builder()
+                                .id(field.getFarm().getId())
+                                .name(field.getFarm().getName())
+                                .location(field.getFarm().getLocation())
+                                .build())
                         .build())
                 .collect(Collectors.toList());
     }

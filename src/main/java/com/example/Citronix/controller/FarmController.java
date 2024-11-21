@@ -1,8 +1,8 @@
 package com.example.Citronix.controller;
 
-import com.example.Citronix.dto.FarmCreateDTO;
-import com.example.Citronix.dto.FarmDTO;
-import com.example.Citronix.dto.FarmUpdateDTO;
+import com.example.Citronix.dto.farm.FarmCreateDTO;
+import com.example.Citronix.dto.farm.FarmDTO;
+import com.example.Citronix.dto.farm.FarmUpdateDTO;
 import com.example.Citronix.service.impl.FarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
