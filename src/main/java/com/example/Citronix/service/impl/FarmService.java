@@ -1,9 +1,10 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.FarmCreateDTO;
+import com.example.Citronix.dto.FieldResponseDTO;
+import com.example.Citronix.dto.farm.FarmCreateDTO;
 
-import com.example.Citronix.dto.FarmDTO;
-import com.example.Citronix.dto.FarmUpdateDTO;
+import com.example.Citronix.dto.farm.FarmDTO;
+import com.example.Citronix.dto.farm.FarmUpdateDTO;
 import com.example.Citronix.mapper.FarmMapper;
 import com.example.Citronix.model.Farm;
 import com.example.Citronix.repository.FarmRepository;
@@ -94,6 +95,8 @@ public class FarmService implements FarmeServiceInterface {
     }
 
 
+
+
     public List<FarmDTO> getAllFarms() {
         return farmRepository.findAll()
                 .stream()
@@ -103,8 +106,16 @@ public class FarmService implements FarmeServiceInterface {
                         .location(farm.getLocation())
                         .area(farm.getArea())
                         .creationDate(farm.getCreationDate())
+                        .fields(farm.getFields().stream() // Mapper les champs associés
+                                .map(field -> FieldResponseDTO.builder()
+                                        .id(field.getId())
+                                        .name(field.getName())
+                                        .area(field.getArea())
+                                        .build())
+                                .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
     }
+
 
 }
