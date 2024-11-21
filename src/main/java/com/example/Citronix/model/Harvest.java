@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "harvests")
@@ -17,5 +19,9 @@ public class Harvest {
     private Season season;
     @Column(name = "harvest_date", nullable = false)
     private LocalDate harvestDate;
+
+    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HarvestDetail> harvestDetails = new ArrayList<>();
+
 
 }
