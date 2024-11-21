@@ -1,10 +1,12 @@
 package com.example.Citronix.model;
 
+import com.example.Citronix.enums.Season;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +30,9 @@ public class Tree {
         if (plantingDate == null) return 0;
         return Period.between(plantingDate, LocalDate.now()).getYears();
     }
+    @OneToMany(mappedBy = "tree")
+    private List<HarvestDetail> harvestDetails;
+
 
     public double calculateAnnualProductivity() {
         int age = calculateAge();

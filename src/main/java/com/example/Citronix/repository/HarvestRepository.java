@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface HarvestRepository extends JpaRepository<Harvest, Long> {
-
-
-    Optional<Harvest> findBySeason(Season season);
+    // Vérifier si une récolte existe déjà pour une saison donnée dans un champ spécifique
+    Optional<Harvest> findBySeasonAndHarvestDetails_Tree_Field_Id(Season season, Long fieldId);
 }
