@@ -1,7 +1,7 @@
 package com.example.Citronix.service.interf;
 
-import com.example.Citronix.dto.FieldCreateDTO;
-import com.example.Citronix.dto.FieldUpdateDTO;
+import com.example.Citronix.dto.field.FieldCreateDTO;
+import com.example.Citronix.dto.field.FieldUpdateDTO;
 import com.example.Citronix.model.Field;
 
 public interface FieldServiceInterface {

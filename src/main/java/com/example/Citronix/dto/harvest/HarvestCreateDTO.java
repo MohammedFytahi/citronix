@@ -1,4 +1,4 @@
-package com.example.Citronix.dto;
+package com.example.Citronix.dto.harvest;
 
 import com.example.Citronix.enums.Season;
 import jakarta.validation.constraints.NotNull;

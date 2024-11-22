@@ -1,4 +1,4 @@
-package com.example.Citronix.dto;
+package com.example.Citronix.dto.sale;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;

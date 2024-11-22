@@ -1,6 +1,6 @@
 package com.example.Citronix.mapper;
 
-import com.example.Citronix.dto.SaleDTO;
+import com.example.Citronix.dto.sale.SaleDTO;
 import com.example.Citronix.model.Sale;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

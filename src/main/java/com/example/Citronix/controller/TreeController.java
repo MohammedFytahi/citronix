@@ -1,7 +1,7 @@
 package com.example.Citronix.controller;
 
-import com.example.Citronix.dto.TreeCreateDTO;
-import com.example.Citronix.dto.TreeDTO;
+import com.example.Citronix.dto.tree.TreeCreateDTO;
+import com.example.Citronix.dto.tree.TreeDTO;
 import com.example.Citronix.service.impl.TreeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

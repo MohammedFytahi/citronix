@@ -1,4 +1,4 @@
-package com.example.Citronix.dto;
+package com.example.Citronix.dto.sale;
 
 import com.example.Citronix.enums.Season;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.example.Citronix.dto;
+package com.example.Citronix.dto.tree;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
