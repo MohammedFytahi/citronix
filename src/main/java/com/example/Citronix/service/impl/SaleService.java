@@ -1,7 +1,9 @@
 package com.example.Citronix.service.impl;
 
 import com.example.Citronix.dto.SaleCreateDTO;
+import com.example.Citronix.dto.SaleDTO;
 import com.example.Citronix.dto.SaleUpdateDTO;
+import com.example.Citronix.mapper.SaleMapper;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.model.HarvestDetail;
 import com.example.Citronix.model.Sale;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SaleService {
@@ -22,38 +25,48 @@ public class SaleService {
     @Autowired
     private HarvestRepository harvestRepository;
 
+    @Autowired
+    private SaleMapper saleMapper;
+
+    public List<SaleDTO> getAllSales() {
+        List<Sale> sales = saleRepository.findAll();
+        return sales.stream()
+                .map(saleMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public SaleDTO getSaleById(Long id) {
+        Sale sale = saleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("La vente avec l'ID " + id + " n'existe pas."));
+        return saleMapper.toDTO(sale);
+    }
+
     @Transactional
     public Sale createSale(SaleCreateDTO saleCreateDTO) {
-        // Vérifier si la récolte existe
-        Harvest harvest = harvestRepository.findById(saleCreateDTO.getHarvestId())
+         Harvest harvest = harvestRepository.findById(saleCreateDTO.getHarvestId())
                 .orElseThrow(() -> new IllegalArgumentException("Récolte non trouvée pour l'ID: " + saleCreateDTO.getHarvestId()));
 
-        // Calculer la quantité totale à partir des détails de la récolte
-        List<HarvestDetail> harvestDetails = harvest.getHarvestDetails();
+         List<HarvestDetail> harvestDetails = harvest.getHarvestDetails();
         double totalQuantity = harvestDetails.stream()
                 .mapToDouble(HarvestDetail::getQuantity)
                 .sum();
 
-        // Créer la vente
-        Sale sale = new Sale();
+         Sale sale = new Sale();
         sale.setSaleDate(saleCreateDTO.getSaleDate());
         sale.setUnitPrice(saleCreateDTO.getUnitPrice());
         sale.setClientName(saleCreateDTO.getClientName());
         sale.setHarvest(harvest);
         sale.setQuantity(totalQuantity); // Quantité calculée
 
-        // Sauvegarder la vente
-        return saleRepository.save(sale);
+         return saleRepository.save(sale);
     }
 
     @Transactional
     public Sale updateSale(Long id, SaleUpdateDTO saleUpdateDTO) {
-        // Récupérer la vente existante par son ID
-        Sale existingSale = saleRepository.findById(id)
+         Sale existingSale = saleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Vente non trouvée pour l'ID : " + id));
 
-        // Mettre à jour uniquement les champs modifiables
-        if (saleUpdateDTO.getSaleDate() != null) {
+         if (saleUpdateDTO.getSaleDate() != null) {
             existingSale.setSaleDate(saleUpdateDTO.getSaleDate());
         }
 
@@ -65,7 +78,17 @@ public class SaleService {
             existingSale.setClientName(saleUpdateDTO.getClientName());
         }
 
-        // Sauvegarder les modifications
-        return saleRepository.save(existingSale);
+         return saleRepository.save(existingSale);
     }
+
+    @Transactional
+    public void deleteSale(Long id) {
+         if (!saleRepository.existsById(id)) {
+            throw new IllegalArgumentException("La vente avec l'ID " + id + " n'existe pas.");
+        }
+
+         saleRepository.deleteById(id);
+    }
+
+
 }
