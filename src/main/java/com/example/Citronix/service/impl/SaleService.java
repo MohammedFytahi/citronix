@@ -1,8 +1,8 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.SaleCreateDTO;
-import com.example.Citronix.dto.SaleDTO;
-import com.example.Citronix.dto.SaleUpdateDTO;
+import com.example.Citronix.dto.sale.SaleCreateDTO;
+import com.example.Citronix.dto.sale.SaleDTO;
+import com.example.Citronix.dto.sale.SaleUpdateDTO;
 import com.example.Citronix.mapper.SaleMapper;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.model.HarvestDetail;

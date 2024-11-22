@@ -1,11 +1,13 @@
 package com.example.Citronix.mapper;
 
-import com.example.Citronix.dto.HarvestCreateDTO;
-import com.example.Citronix.dto.HarvestDetailDTO;
+import com.example.Citronix.dto.harvest.HarvestCreateDTO;
+import com.example.Citronix.dto.harvest.HarvestDetailDTO;
+import com.example.Citronix.dto.harvest.HarvestUpdateDTO;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.model.HarvestDetail;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -24,4 +26,5 @@ public interface HarvestMapper {
     HarvestDetailDTO toDetailDTO(HarvestDetail detail);
 
     List<HarvestDetailDTO> toDetailDTOs(List<HarvestDetail> details);
+    void updateEntityFromDTO(HarvestUpdateDTO harvestUpdateDTO, @MappingTarget Harvest harvest);
 }

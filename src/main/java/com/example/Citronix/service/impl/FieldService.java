@@ -1,8 +1,8 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.FieldCreateDTO;
-import com.example.Citronix.dto.FieldDTO;
-import com.example.Citronix.dto.FieldUpdateDTO;
+import com.example.Citronix.dto.field.FieldCreateDTO;
+import com.example.Citronix.dto.field.FieldDTO;
+import com.example.Citronix.dto.field.FieldUpdateDTO;
 import com.example.Citronix.dto.farm.FarmSummaryDTO;
 import com.example.Citronix.mapper.FieldMapper;
 import com.example.Citronix.model.Farm;

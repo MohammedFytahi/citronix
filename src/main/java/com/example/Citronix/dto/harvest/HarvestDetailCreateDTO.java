@@ -1,4 +1,4 @@
-package com.example.Citronix.dto;
+package com.example.Citronix.dto.harvest;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

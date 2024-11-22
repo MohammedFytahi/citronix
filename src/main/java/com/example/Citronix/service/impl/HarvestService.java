@@ -1,6 +1,6 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.HarvestCreateDTO;
+import com.example.Citronix.dto.harvest.HarvestCreateDTO;
 import com.example.Citronix.mapper.HarvestMapper;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.model.HarvestDetail;

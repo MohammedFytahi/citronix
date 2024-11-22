@@ -1,7 +1,7 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.TreeCreateDTO;
-import com.example.Citronix.dto.TreeDTO;
+import com.example.Citronix.dto.tree.TreeCreateDTO;
+import com.example.Citronix.dto.tree.TreeDTO;
 import com.example.Citronix.mapper.TreeMapper;
 import com.example.Citronix.model.Field;
 import com.example.Citronix.model.Tree;

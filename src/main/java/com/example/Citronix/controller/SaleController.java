@@ -1,8 +1,8 @@
 package com.example.Citronix.controller;
 
-import com.example.Citronix.dto.SaleCreateDTO;
-import com.example.Citronix.dto.SaleDTO;
-import com.example.Citronix.dto.SaleUpdateDTO;
+import com.example.Citronix.dto.sale.SaleCreateDTO;
+import com.example.Citronix.dto.sale.SaleDTO;
+import com.example.Citronix.dto.sale.SaleUpdateDTO;
 import com.example.Citronix.model.Sale;
 import com.example.Citronix.service.impl.SaleService;
 import jakarta.validation.Valid;

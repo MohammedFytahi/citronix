@@ -1,6 +1,6 @@
 package com.example.Citronix.controller;
 
-import com.example.Citronix.dto.HarvestDetailCreateDTO;
+import com.example.Citronix.dto.harvest.HarvestDetailCreateDTO;
 import com.example.Citronix.model.HarvestDetail;
 import com.example.Citronix.service.impl.HarvestDetailService;
 import jakarta.validation.Valid;

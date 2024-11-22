@@ -1,6 +1,6 @@
 package com.example.Citronix.service.impl;
 
-import com.example.Citronix.dto.FieldResponseDTO;
+import com.example.Citronix.dto.field.FieldResponseDTO;
 import com.example.Citronix.dto.farm.FarmCreateDTO;
 
 import com.example.Citronix.dto.farm.FarmDTO;

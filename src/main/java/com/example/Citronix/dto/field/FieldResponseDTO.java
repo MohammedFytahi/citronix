@@ -1,4 +1,4 @@
-package com.example.Citronix.dto;
+package com.example.Citronix.dto.field;
 
 import lombok.Builder;
 import lombok.Data;
