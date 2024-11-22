@@ -1,6 +1,7 @@
 package com.example.Citronix.controller;
 
 import com.example.Citronix.dto.SaleCreateDTO;
+import com.example.Citronix.dto.SaleDTO;
 import com.example.Citronix.dto.SaleUpdateDTO;
 import com.example.Citronix.model.Sale;
 import com.example.Citronix.service.impl.SaleService;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/sales")
@@ -27,9 +30,30 @@ public class SaleController {
             @PathVariable Long id,
             @Valid @RequestBody SaleUpdateDTO saleUpdateDTO) {
 
-        // Appeler le service pour mettre à jour la vente
-        Sale updatedSale = saleService.updateSale(id, saleUpdateDTO);
+         Sale updatedSale = saleService.updateSale(id, saleUpdateDTO);
 
         return ResponseEntity.ok(updatedSale);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSale(@PathVariable Long id) {
+        try {
+             saleService.deleteSale(id);
+            return ResponseEntity.ok("La vente avec l'ID " + id + " a été supprimée avec succès.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SaleDTO>> getAllSales() {
+        List<SaleDTO> sales = saleService.getAllSales();
+        return ResponseEntity.ok(sales);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SaleDTO> getSaleById(@PathVariable Long id) {
+        SaleDTO sale = saleService.getSaleById(id);
+        return ResponseEntity.ok(sale);
     }
 }
