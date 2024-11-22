@@ -1,6 +1,7 @@
 package com.example.Citronix.controller;
 
 import com.example.Citronix.dto.SaleCreateDTO;
+import com.example.Citronix.dto.SaleUpdateDTO;
 import com.example.Citronix.model.Sale;
 import com.example.Citronix.service.impl.SaleService;
 import jakarta.validation.Valid;
@@ -19,5 +20,16 @@ public class SaleController {
     public ResponseEntity<Sale> createSale(@Valid @RequestBody SaleCreateDTO saleCreateDTO) {
         Sale sale = saleService.createSale(saleCreateDTO);
         return ResponseEntity.ok(sale);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Sale> updateSale(
+            @PathVariable Long id,
+            @Valid @RequestBody SaleUpdateDTO saleUpdateDTO) {
+
+        // Appeler le service pour mettre à jour la vente
+        Sale updatedSale = saleService.updateSale(id, saleUpdateDTO);
+
+        return ResponseEntity.ok(updatedSale);
     }
 }
