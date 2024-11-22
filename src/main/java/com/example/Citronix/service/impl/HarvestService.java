@@ -1,6 +1,8 @@
 package com.example.Citronix.service.impl;
 
 import com.example.Citronix.dto.harvest.HarvestCreateDTO;
+import com.example.Citronix.dto.harvest.HarvestDTO;
+import com.example.Citronix.dto.harvest.HarvestUpdateDTO;
 import com.example.Citronix.mapper.HarvestMapper;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.model.HarvestDetail;
@@ -41,17 +43,39 @@ public class HarvestService {
             harvest.setHarvestDetails(new ArrayList<>());
         }
 
-        // Récupérer les arbres associés au champ
-        List<Tree> trees = treeRepository.findByFieldId(fieldId);
+         List<Tree> trees = treeRepository.findByFieldId(fieldId);
         for (Tree tree : trees) {
             HarvestDetail detail = new HarvestDetail();
             detail.setHarvest(harvest); // Associe la récolte
             detail.setTree(tree); // Associe l'arbre
-            detail.setQuantity(tree.calculateAnnualProductivity()); // Calcul de la quantité récoltée par arbre
-            harvest.getHarvestDetails().add(detail); // Ajouter les détails à la récolte
+            detail.setQuantity(tree.calculateAnnualProductivity());
+            harvest.getHarvestDetails().add(detail);
         }
 
-        // Sauvegarder la récolte et ses détails
-        return harvestRepository.save(harvest); // Sauvegarde la récolte, ainsi que ses détails
+         return harvestRepository.save(harvest);
+    }
+
+    @Transactional
+    public Harvest updateHarvest(Long id, HarvestUpdateDTO harvestUpdateDTO) {
+         Harvest existingHarvest = harvestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Harvest not found with ID: " + id));
+
+         harvestMapper.updateEntityFromDTO(harvestUpdateDTO, existingHarvest);
+
+         return harvestRepository.save(existingHarvest);
+    }
+
+    @Transactional
+    public void deleteHarvest(Long id) {
+         if (!harvestRepository.existsById(id)) {
+            throw new IllegalArgumentException("Harvest not found with ID: " + id);
+        }
+
+         harvestRepository.deleteById(id);
+    }
+    public HarvestDTO getHarvestById(Long id) {
+        Harvest harvest = harvestRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Harvest not found with ID: " + id));
+        return harvestMapper.harvestToDTO(harvest);
     }
 }

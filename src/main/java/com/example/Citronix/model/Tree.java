@@ -1,6 +1,7 @@
 package com.example.Citronix.model;
 
 import com.example.Citronix.enums.Season;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class Tree {
 
     @ManyToOne
     @JoinColumn(name = "field_id", nullable = false)
+    @JsonBackReference
     private Field field;
 
     public Integer calculateAge() {

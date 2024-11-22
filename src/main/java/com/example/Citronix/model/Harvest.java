@@ -20,7 +20,7 @@ public class Harvest {
     @Column(name = "harvest_date", nullable = false)
     private LocalDate harvestDate;
 
-    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<HarvestDetail> harvestDetails = new ArrayList<>();
 
 
