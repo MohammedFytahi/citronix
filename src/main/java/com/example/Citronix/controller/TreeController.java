@@ -2,6 +2,8 @@ package com.example.Citronix.controller;
 
 import com.example.Citronix.dto.tree.TreeCreateDTO;
 import com.example.Citronix.dto.tree.TreeDTO;
+import com.example.Citronix.dto.tree.TreeUpdateDTO;
+import com.example.Citronix.model.Tree;
 import com.example.Citronix.service.impl.TreeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +40,13 @@ public class TreeController {
     public ResponseEntity<List<TreeDTO>> getAllTreesWithAge() {
         List<TreeDTO> trees = treeService.getAllTreesWithAge();
         return ResponseEntity.ok(trees);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateTree(
+            @PathVariable Long id,
+            @RequestBody TreeUpdateDTO treeUpdateDTO) {
+        Tree updatedTree = treeService.updateTree(id, treeUpdateDTO);
+        return ResponseEntity.ok("tree updated");
     }
 }

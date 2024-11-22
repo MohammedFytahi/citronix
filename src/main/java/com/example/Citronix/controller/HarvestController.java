@@ -1,6 +1,8 @@
 package com.example.Citronix.controller;
 
 import com.example.Citronix.dto.harvest.HarvestCreateDTO;
+import com.example.Citronix.dto.harvest.HarvestDTO;
+import com.example.Citronix.dto.harvest.HarvestUpdateDTO;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.service.impl.HarvestService;
 import jakarta.validation.Valid;
@@ -25,5 +27,29 @@ public class HarvestController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Harvest> updateHarvest(
+            @PathVariable Long id,
+            @Valid @RequestBody HarvestUpdateDTO harvestUpdateDTO) {
+        Harvest updatedHarvest = harvestService.updateHarvest(id, harvestUpdateDTO);
+        return ResponseEntity.ok(updatedHarvest);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteHarvest(@PathVariable Long id) {
+        try {
+            harvestService.deleteHarvest(id);
+            return ResponseEntity.ok("Harvest deleted successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HarvestDTO> getHarvestById(@PathVariable Long id) {
+        HarvestDTO harvestDTO = harvestService.getHarvestById(id);
+        return ResponseEntity.ok(harvestDTO);
     }
 }
