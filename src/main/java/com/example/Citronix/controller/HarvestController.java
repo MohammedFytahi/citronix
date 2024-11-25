@@ -5,6 +5,7 @@ import com.example.Citronix.dto.harvest.HarvestDTO;
 import com.example.Citronix.dto.harvest.HarvestUpdateDTO;
 import com.example.Citronix.model.Harvest;
 import com.example.Citronix.service.impl.HarvestService;
+import com.example.Citronix.service.interf.HarvestServiceInterface;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class HarvestController {
 
     @Autowired
-    private HarvestService harvestService;
+    private HarvestServiceInterface harvestService;
 
     @PostMapping("/field/{fieldId}")
     public ResponseEntity<?> createHarvest(

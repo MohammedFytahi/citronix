@@ -5,6 +5,7 @@ import com.example.Citronix.dto.sale.SaleDTO;
 import com.example.Citronix.dto.sale.SaleUpdateDTO;
 import com.example.Citronix.model.Sale;
 import com.example.Citronix.service.impl.SaleService;
+import com.example.Citronix.service.interf.SaleServiceInterface;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 public class SaleController {
 
     @Autowired
-    private SaleService saleService;
+    private SaleServiceInterface saleService;
 
     @PostMapping
     public ResponseEntity<Sale> createSale(@Valid @RequestBody SaleCreateDTO saleCreateDTO) {

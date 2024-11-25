@@ -20,4 +20,8 @@ public interface FieldMapper {
     Field toEntity(FieldCreateDTO fieldCreateDTO);
 
     Field toEntity(FieldUpdateDTO fieldUpdateDTO);
+    @Mapping(target = "farm.id", source = "farm.id")
+    @Mapping(target = "farm.name", source = "farm.name")
+    @Mapping(target = "farm.location", source = "farm.location")
+    FieldDTO toDTO(Field field);
 }

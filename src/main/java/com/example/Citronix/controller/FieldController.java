@@ -3,8 +3,8 @@ package com.example.Citronix.controller;
 import com.example.Citronix.dto.field.FieldCreateDTO;
 import com.example.Citronix.dto.field.FieldDTO;
 import com.example.Citronix.dto.field.FieldUpdateDTO;
-import com.example.Citronix.model.Field;
-import com.example.Citronix.service.impl.FieldService;
+ import com.example.Citronix.service.impl.FieldService;
+import com.example.Citronix.service.interf.FieldServiceInterface;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,8 @@ import java.util.List;
 @RequestMapping("/api/fields")
 public class FieldController {
 
-@Autowired
-    FieldService fieldService;
+    @Autowired
+    private FieldServiceInterface fieldService;
 
     @PostMapping
     public ResponseEntity<String> createField(@Valid @RequestBody FieldCreateDTO fieldCreateDTO) {
@@ -32,7 +32,7 @@ public class FieldController {
 
     @PutMapping("/update")
     public ResponseEntity<String> updateField(@Valid @RequestBody FieldUpdateDTO fieldUpdateDTO) {
-        Field updatedField = fieldService.updateField(fieldUpdateDTO);
+        FieldDTO updatedField = fieldService.updateField(fieldUpdateDTO);
         return ResponseEntity.ok("Field updated successfully");
     }
 

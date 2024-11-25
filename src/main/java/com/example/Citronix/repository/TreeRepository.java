@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TreeRepository extends JpaRepository<Tree, Long> {
     List<Tree> findByFieldId(Long fieldId);
+    long countByFieldId(Long fieldId);
 }

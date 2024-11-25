@@ -2,8 +2,10 @@ package com.example.Citronix.controller;
 
 import com.example.Citronix.dto.farm.FarmCreateDTO;
 import com.example.Citronix.dto.farm.FarmDTO;
+import com.example.Citronix.dto.farm.FarmSearchCriteria;
 import com.example.Citronix.dto.farm.FarmUpdateDTO;
 import com.example.Citronix.service.impl.FarmService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/farms")
+@RequiredArgsConstructor
 public class FarmController {
-    @Autowired
-    private FarmService farmService;
+     private final FarmService farmService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,6 +48,11 @@ public class FarmController {
     @GetMapping
     public ResponseEntity<List<FarmDTO>> getAllFarms() {
         List<FarmDTO> farms = farmService.getAllFarms();
+        return ResponseEntity.ok(farms);
+    }
+    @PostMapping("/search")
+    public ResponseEntity<List<FarmDTO>> searchFarms(@RequestBody FarmSearchCriteria criteria) {
+        List<FarmDTO> farms = farmService.searchFarms(criteria);
         return ResponseEntity.ok(farms);
     }
 }
