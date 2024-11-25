@@ -1,11 +1,11 @@
 package com.example.Citronix.model;
 
-import com.example.Citronix.enums.Season;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 import java.util.List;
 
@@ -45,5 +45,13 @@ public class Tree {
         } else {
             return 20.0;
         }
+    }
+
+    public static boolean isPlantingDateValid(LocalDate plantingDate) {
+        if (plantingDate == null) {
+            return false;
+        }
+        Month month = plantingDate.getMonth();
+        return month.equals(Month.MARCH) || month.equals(Month.APRIL) || month.equals(Month.MAY);
     }
 }

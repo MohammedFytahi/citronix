@@ -1,5 +1,6 @@
 package com.example.Citronix.service.impl;
 
+import com.example.Citronix.dto.farm.FarmSearchCriteria;
 import com.example.Citronix.dto.field.FieldResponseDTO;
 import com.example.Citronix.dto.farm.FarmCreateDTO;
 
@@ -8,9 +9,12 @@ import com.example.Citronix.dto.farm.FarmUpdateDTO;
 import com.example.Citronix.mapper.FarmMapper;
 import com.example.Citronix.model.Farm;
 import com.example.Citronix.repository.FarmRepository;
+import com.example.Citronix.repository.FarmRepositoryCustom;
 import com.example.Citronix.service.interf.FarmeServiceInterface;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,12 +23,15 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class FarmService implements FarmeServiceInterface {
-
-    @Autowired
-    private FarmRepository farmRepository;
+@RequiredArgsConstructor
+    public class FarmService implements FarmeServiceInterface {
 
 
+    @Qualifier("farmRepository")
+    private final FarmRepository farmRepository;
+
+    @Qualifier("farmRepositoryCustomImpl")
+    private final FarmRepositoryCustom farmRepositoryCustom;
 
     @Override
     public void addFarm(FarmCreateDTO farmCreateDTO) {
@@ -78,12 +85,13 @@ public class FarmService implements FarmeServiceInterface {
 
         farmRepository.save(existingFarm);
     }
-
+     @Override
     public FarmDTO getFarm(Long id) {
         Farm farm = farmRepository.findById(id).orElseThrow(() -> new RuntimeException("Farm not found"));
         return FarmMapper.INSTANCE.farmToFarmDTO(farm);
     }
 
+    @Override
     @Transactional
     public void deleteFarm(Long id) {
 
@@ -97,6 +105,7 @@ public class FarmService implements FarmeServiceInterface {
 
 
 
+    @Override
     public List<FarmDTO> getAllFarms() {
         return farmRepository.findAll()
                 .stream()
@@ -106,7 +115,7 @@ public class FarmService implements FarmeServiceInterface {
                         .location(farm.getLocation())
                         .area(farm.getArea())
                         .creationDate(farm.getCreationDate())
-                        .fields(farm.getFields().stream() // Mapper les champs associés
+                        .fields(farm.getFields().stream()
                                 .map(field -> FieldResponseDTO.builder()
                                         .id(field.getId())
                                         .name(field.getName())
@@ -117,5 +126,12 @@ public class FarmService implements FarmeServiceInterface {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<FarmDTO> searchFarms(FarmSearchCriteria criteria) {
+        List<Farm> farms = farmRepositoryCustom.searchFarms(criteria);
+        return farms.stream()
+                .map(FarmMapper.INSTANCE::farmToFarmDTO)
+                .collect(Collectors.toList());
+    }
 
 }

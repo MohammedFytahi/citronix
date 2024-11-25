@@ -9,7 +9,9 @@ import com.example.Citronix.model.HarvestDetail;
 import com.example.Citronix.model.Sale;
 import com.example.Citronix.repository.HarvestRepository;
 import com.example.Citronix.repository.SaleRepository;
+import com.example.Citronix.service.interf.SaleServiceInterface;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +19,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SaleService {
+@RequiredArgsConstructor
+public class SaleService implements SaleServiceInterface {
 
-    @Autowired
-    private SaleRepository saleRepository;
+    private final SaleRepository saleRepository;
 
-    @Autowired
-    private HarvestRepository harvestRepository;
+    private final HarvestRepository harvestRepository;
 
-    @Autowired
-    private SaleMapper saleMapper;
-
+     private final SaleMapper saleMapper;
+@Override
     public List<SaleDTO> getAllSales() {
         List<Sale> sales = saleRepository.findAll();
         return sales.stream()
@@ -41,6 +41,7 @@ public class SaleService {
         return saleMapper.toDTO(sale);
     }
 
+    @Override
     @Transactional
     public Sale createSale(SaleCreateDTO saleCreateDTO) {
          Harvest harvest = harvestRepository.findById(saleCreateDTO.getHarvestId())
@@ -61,6 +62,7 @@ public class SaleService {
          return saleRepository.save(sale);
     }
 
+    @Override
     @Transactional
     public Sale updateSale(Long id, SaleUpdateDTO saleUpdateDTO) {
          Sale existingSale = saleRepository.findById(id)
@@ -81,6 +83,7 @@ public class SaleService {
          return saleRepository.save(existingSale);
     }
 
+    @Override
     @Transactional
     public void deleteSale(Long id) {
          if (!saleRepository.existsById(id)) {
