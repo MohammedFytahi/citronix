@@ -25,8 +25,7 @@ public class FarmRepositoryCustomImpl implements FarmRepositoryCustom {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        // Ajouter des prédicats dynamiquement en fonction des critères
-        if (criteria.getName() != null && !criteria.getName().isEmpty()) {
+         if (criteria.getName() != null && !criteria.getName().isEmpty()) {
             predicates.add(cb.like(cb.lower(farm.get("name")), "%" + criteria.getName().toLowerCase() + "%"));
         }
         if (criteria.getLocation() != null && !criteria.getLocation().isEmpty()) {
@@ -39,8 +38,7 @@ public class FarmRepositoryCustomImpl implements FarmRepositoryCustom {
             predicates.add(cb.lessThanOrEqualTo(farm.get("area"), criteria.getMaxArea()));
         }
 
-        // Appliquer les prédicats à la requête
-        query.where(cb.and(predicates.toArray(new Predicate[0])));
+         query.where(cb.and(predicates.toArray(new Predicate[0])));
 
         return entityManager.createQuery(query).getResultList();
     }

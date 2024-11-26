@@ -3,6 +3,8 @@ package com.example.Citronix.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "fields")
@@ -21,4 +23,8 @@ public class Field {
     @ManyToOne
     @JoinColumn(name = "farm_id", nullable = false)
     private Farm farm;
+
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tree> trees;
+
 }

@@ -57,7 +57,7 @@ public class SaleService implements SaleServiceInterface {
         sale.setUnitPrice(saleCreateDTO.getUnitPrice());
         sale.setClientName(saleCreateDTO.getClientName());
         sale.setHarvest(harvest);
-        sale.setQuantity(totalQuantity); // Quantité calculée
+        sale.setQuantity(totalQuantity);
 
          return saleRepository.save(sale);
     }

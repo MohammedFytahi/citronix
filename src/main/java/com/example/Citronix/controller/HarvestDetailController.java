@@ -27,10 +27,6 @@ public class HarvestDetailController {
         return ResponseEntity.ok(harvestDetailService.getDetailsByTree(treeId));
     }
 
-    @PostMapping
-    public ResponseEntity<HarvestDetail> createHarvestDetail(@Valid @RequestBody HarvestDetailCreateDTO harvestDetailCreateDTO) {
-        HarvestDetail harvestDetail = harvestDetailService.createHarvestDetail(harvestDetailCreateDTO);
-        return ResponseEntity.ok(harvestDetail);
-    }
+
 }
 
