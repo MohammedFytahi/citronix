@@ -31,24 +31,21 @@ public class HarvestService implements HarvestServiceInterface {
     @Override
     @Transactional
     public Harvest createHarvest(HarvestCreateDTO harvestCreateDTO, Long fieldId) {
-        // Vérifier si une récolte existe déjà pour cette saison et ce champ
-        if (harvestRepository.findBySeasonAndHarvestDetails_Tree_Field_Id(harvestCreateDTO.getSeason(), fieldId).isPresent()) {
+         if (harvestRepository.findBySeasonAndHarvestDetails_Tree_Field_Id(harvestCreateDTO.getSeason(), fieldId).isPresent()) {
             throw new IllegalArgumentException("Une récolte existe déjà pour cette saison dans ce champ.");
         }
 
-        // Convertir les données du DTO en entité
-        Harvest harvest = harvestMapper.toEntity(harvestCreateDTO);
+         Harvest harvest = harvestMapper.toEntity(harvestCreateDTO);
 
         if (harvest.getHarvestDetails() == null) {
             harvest.setHarvestDetails(new ArrayList<>());
         }
 
-        // Récupérer tous les arbres associés au champ
-        List<Tree> trees = treeRepository.findByFieldId(fieldId);
+         List<Tree> trees = treeRepository.findByFieldId(fieldId);
         for (Tree tree : trees) {
             HarvestDetail detail = new HarvestDetail();
-            detail.setHarvest(harvest); // Associer la récolte
-            detail.setTree(tree); // Associer l'arbre
+            detail.setHarvest(harvest);
+            detail.setTree(tree);
             detail.setQuantity(tree.calculateAnnualProductivity());
             harvest.getHarvestDetails().add(detail);
         }
@@ -59,12 +56,10 @@ public class HarvestService implements HarvestServiceInterface {
     @Override
     @Transactional
     public Harvest updateHarvest(Long id, HarvestUpdateDTO harvestUpdateDTO) {
-        // Vérifier si la récolte existe
-        Harvest existingHarvest = harvestRepository.findById(id)
+         Harvest existingHarvest = harvestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Harvest not found with ID: " + id));
 
-        // Mettre à jour les données de la récolte à partir du DTO
-        harvestMapper.updateEntityFromDTO(harvestUpdateDTO, existingHarvest);
+         harvestMapper.updateEntityFromDTO(harvestUpdateDTO, existingHarvest);
 
         return harvestRepository.save(existingHarvest);
     }
@@ -72,22 +67,18 @@ public class HarvestService implements HarvestServiceInterface {
     @Override
     @Transactional
     public void deleteHarvest(Long id) {
-        // Vérifier si la récolte existe
-        if (!harvestRepository.existsById(id)) {
+         if (!harvestRepository.existsById(id)) {
             throw new IllegalArgumentException("Harvest not found with ID: " + id);
         }
 
-        // Supprimer la récolte
-        harvestRepository.deleteById(id);
+         harvestRepository.deleteById(id);
     }
 
     @Override
     public HarvestDTO getHarvestById(Long id) {
-        // Récupérer la récolte par son ID
-        Harvest harvest = harvestRepository.findById(id)
+         Harvest harvest = harvestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Harvest not found with ID: " + id));
 
-        // Convertir l'entité en DTO
-        return harvestMapper.harvestToDTO(harvest);
+         return harvestMapper.harvestToDTO(harvest);
     }
 }

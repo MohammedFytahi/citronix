@@ -40,24 +40,20 @@ public class FieldService implements FieldServiceInterface {
 
         double totalFieldArea = farm.calculateTotalFieldArea();
 
-        // Vérification de la superficie minimale
-        if (fieldCreateDTO.getArea() < 1000) {
+         if (fieldCreateDTO.getArea() < 1000) {
             throw new IllegalArgumentException("The minimum area for a field is 1000 m² (0.1 hectare).");
         }
 
-        // Vérification de la limite de 50% de la superficie totale de la ferme
-        if (totalFieldArea + fieldCreateDTO.getArea() > (farm.getArea() / 2)) {
+         if (totalFieldArea + fieldCreateDTO.getArea() > (farm.getArea() / 2)) {
             throw new IllegalArgumentException("The field area cannot exceed 50% of the total farm area.");
         }
 
-        // Vérification du nombre maximal de champs par ferme
-        long numberOfFields = fieldRepository.countByFarmId(farm.getId());
+         long numberOfFields = fieldRepository.countByFarmId(farm.getId());
         if (numberOfFields >= 10) {
             throw new IllegalArgumentException("A farm cannot have more than 10 fields.");
         }
 
-        // Création du champ
-        Field field = fieldMapper.toEntity(fieldCreateDTO);
+         Field field = fieldMapper.toEntity(fieldCreateDTO);
         field.setFarm(farm);
 
         fieldRepository.save(field);
@@ -66,12 +62,10 @@ public class FieldService implements FieldServiceInterface {
     @Override
     @Transactional
     public FieldDTO updateField(FieldUpdateDTO fieldUpdateDTO) {
-        // Récupérer le champ existant
-        Field existingField = fieldRepository.findById(fieldUpdateDTO.getId())
+         Field existingField = fieldRepository.findById(fieldUpdateDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Field not found for ID: " + fieldUpdateDTO.getId()));
 
-        // Mise à jour des informations
-        if (fieldUpdateDTO.getName() != null) {
+         if (fieldUpdateDTO.getName() != null) {
             existingField.setName(fieldUpdateDTO.getName());
         }
         if (fieldUpdateDTO.getArea() != null) {

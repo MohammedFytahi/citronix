@@ -6,6 +6,7 @@ import com.example.Citronix.dto.farm.FarmCreateDTO;
 
 import com.example.Citronix.dto.farm.FarmDTO;
 import com.example.Citronix.dto.farm.FarmUpdateDTO;
+import com.example.Citronix.enums.Season;
 import com.example.Citronix.mapper.FarmMapper;
 import com.example.Citronix.model.Farm;
 import com.example.Citronix.repository.FarmRepository;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
     public class FarmService implements FarmeServiceInterface {
 
 
-    @Qualifier("farmRepository")
+
     private final FarmRepository farmRepository;
 
     @Qualifier("farmRepositoryCustomImpl")
@@ -133,5 +134,9 @@ import java.util.stream.Collectors;
                 .map(FarmMapper.INSTANCE::farmToFarmDTO)
                 .collect(Collectors.toList());
     }
+
+
+
+
 
 }

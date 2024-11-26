@@ -24,7 +24,7 @@ public class HarvestController {
             @Valid @RequestBody HarvestCreateDTO harvestCreateDTO) {
         try {
             Harvest harvest = harvestService.createHarvest(harvestCreateDTO, fieldId);
-            return ResponseEntity.ok(harvest); // Retourne la récolte avec ses détails
+            return ResponseEntity.ok(harvest);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

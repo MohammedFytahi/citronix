@@ -15,7 +15,7 @@ public interface FarmMapper {
     FarmDTO farmToFarmDTO(Farm farm);
 
     Farm farmDTOToFarm(FarmDTO farmDto);
-    @Mapping(target = "creationDate", ignore = true) // Ignorer la date de création
+    @Mapping(target = "creationDate", ignore = true)
     Farm toEntity(FarmCreateDTO farmCreateDTO);
 
     Farm toEntity(FarmUpdateDTO farmUpdateDTO);
