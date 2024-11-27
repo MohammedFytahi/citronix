@@ -17,6 +17,7 @@
     import java.util.stream.Collectors;
     @Service
     @RequiredArgsConstructor
+    @Transactional
     public class TreeService implements TreeServiceInterface {
 
          private final TreeRepository treeRepository;
@@ -30,6 +31,7 @@
 
         private static final int MAX_TREE_AGE = 20;  
 
+        @Override
         public void createTree(TreeCreateDTO treeCreateDTO) {
              if (!Tree.isPlantingDateValid(treeCreateDTO.getPlantingDate())) {
                 throw new IllegalArgumentException("Les arbres ne peuvent être plantés qu'entre mars et mai.");
@@ -54,16 +56,18 @@
 
             treeRepository.save(tree);
         }
-
+        @Override
         public List<Tree> getTreesByField(Long fieldId) {
             return treeRepository.findByFieldId(fieldId);
         }
 
+        @Override
         public double calculateTotalProductivity(Long fieldId) {
             List<Tree> trees = getTreesByField(fieldId);
             return trees.stream().mapToDouble(Tree::calculateAnnualProductivity).sum();
         }
 
+        @Override
         public List<TreeDTO> getAllTreesWithAge() {
             List<Tree> trees = treeRepository.findAll();
             return trees.stream()
@@ -71,8 +75,8 @@
                     .collect(Collectors.toList());
         }
 
-        @Transactional
-        public Tree updateTree(Long id, TreeUpdateDTO treeUpdateDTO) {
+        @Override
+         public Tree updateTree(Long id, TreeUpdateDTO treeUpdateDTO) {
              Tree existingTree = treeRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Tree not found with ID: " + id));
 

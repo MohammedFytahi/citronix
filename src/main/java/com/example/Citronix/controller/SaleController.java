@@ -7,6 +7,7 @@ import com.example.Citronix.model.Sale;
 import com.example.Citronix.service.impl.SaleService;
 import com.example.Citronix.service.interf.SaleServiceInterface;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/sales")
+@RequiredArgsConstructor
 public class SaleController {
 
-    @Autowired
-    private SaleServiceInterface saleService;
+     private final SaleServiceInterface saleService;
 
     @PostMapping
     public ResponseEntity<Sale> createSale(@Valid @RequestBody SaleCreateDTO saleCreateDTO) {

@@ -16,6 +16,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -57,8 +60,7 @@ import java.util.stream.Collectors;
 
 
     @Override
-    @Transactional
-    public void updateFarm(Long id, FarmUpdateDTO farmUpdateDTO) {
+     public void updateFarm(Long id, FarmUpdateDTO farmUpdateDTO) {
         Farm existingFarm = farmRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Farm not found"));
 
@@ -93,8 +95,7 @@ import java.util.stream.Collectors;
     }
 
     @Override
-    @Transactional
-    public void deleteFarm(Long id) {
+     public void deleteFarm(Long id) {
 
         if (!farmRepository.existsById(id)) {
             throw new RuntimeException("Farm with ID " + id + " does not exist");
@@ -134,7 +135,6 @@ import java.util.stream.Collectors;
                 .map(FarmMapper.INSTANCE::farmToFarmDTO)
                 .collect(Collectors.toList());
     }
-
 
 
 
