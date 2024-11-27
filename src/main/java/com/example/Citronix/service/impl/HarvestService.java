@@ -20,6 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class HarvestService implements HarvestServiceInterface {
 
      private final HarvestRepository harvestRepository;
@@ -29,8 +30,7 @@ public class HarvestService implements HarvestServiceInterface {
      private final HarvestMapper harvestMapper;
 
     @Override
-    @Transactional
-    public Harvest createHarvest(HarvestCreateDTO harvestCreateDTO, Long fieldId) {
+     public Harvest createHarvest(HarvestCreateDTO harvestCreateDTO, Long fieldId) {
          if (harvestRepository.findBySeasonAndHarvestDetails_Tree_Field_Id(harvestCreateDTO.getSeason(), fieldId).isPresent()) {
             throw new IllegalArgumentException("Une récolte existe déjà pour cette saison dans ce champ.");
         }
@@ -54,8 +54,7 @@ public class HarvestService implements HarvestServiceInterface {
     }
 
     @Override
-    @Transactional
-    public Harvest updateHarvest(Long id, HarvestUpdateDTO harvestUpdateDTO) {
+     public Harvest updateHarvest(Long id, HarvestUpdateDTO harvestUpdateDTO) {
          Harvest existingHarvest = harvestRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Harvest not found with ID: " + id));
 
@@ -65,8 +64,7 @@ public class HarvestService implements HarvestServiceInterface {
     }
 
     @Override
-    @Transactional
-    public void deleteHarvest(Long id) {
+     public void deleteHarvest(Long id) {
          if (!harvestRepository.existsById(id)) {
             throw new IllegalArgumentException("Harvest not found with ID: " + id);
         }

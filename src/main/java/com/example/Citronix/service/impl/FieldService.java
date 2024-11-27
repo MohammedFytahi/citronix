@@ -7,6 +7,7 @@ import com.example.Citronix.dto.farm.FarmSummaryDTO;
 import com.example.Citronix.mapper.FieldMapper;
 import com.example.Citronix.model.Farm;
 import com.example.Citronix.model.Field;
+import com.example.Citronix.model.HarvestDetail;
 import com.example.Citronix.repository.FarmRepository;
 import com.example.Citronix.repository.FieldRepository;
 import com.example.Citronix.service.interf.FieldServiceInterface;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FieldService implements FieldServiceInterface {
 
 
@@ -33,8 +35,7 @@ public class FieldService implements FieldServiceInterface {
     private final FieldMapper fieldMapper;
 
     @Override
-    @Transactional
-    public void createField(FieldCreateDTO fieldCreateDTO) {
+     public void createField(FieldCreateDTO fieldCreateDTO) {
         Farm farm = farmRepository.findById(fieldCreateDTO.getFarmId())
                 .orElseThrow(() -> new IllegalArgumentException("Farm not found for ID: " + fieldCreateDTO.getFarmId()));
 
@@ -60,8 +61,7 @@ public class FieldService implements FieldServiceInterface {
     }
 
     @Override
-    @Transactional
-    public FieldDTO updateField(FieldUpdateDTO fieldUpdateDTO) {
+     public FieldDTO updateField(FieldUpdateDTO fieldUpdateDTO) {
          Field existingField = fieldRepository.findById(fieldUpdateDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Field not found for ID: " + fieldUpdateDTO.getId()));
 
@@ -83,8 +83,7 @@ public class FieldService implements FieldServiceInterface {
     }
 
     @Override
-    @Transactional
-    public void deleteField(Long id) {
+     public void deleteField(Long id) {
         if (!fieldRepository.existsById(id)) {
             throw new RuntimeException("Field with ID " + id + " does not exist");
         }
@@ -107,4 +106,6 @@ public class FieldService implements FieldServiceInterface {
                         .build())
                 .collect(Collectors.toList());
     }
+
+
 }

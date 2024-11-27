@@ -6,6 +6,7 @@ import com.example.Citronix.dto.field.FieldUpdateDTO;
  import com.example.Citronix.service.impl.FieldService;
 import com.example.Citronix.service.interf.FieldServiceInterface;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/fields")
+@RequiredArgsConstructor
 public class FieldController {
 
-    @Autowired
-    private FieldServiceInterface fieldService;
+     private final FieldServiceInterface fieldService;
 
     @PostMapping
     public ResponseEntity<String> createField(@Valid @RequestBody FieldCreateDTO fieldCreateDTO) {

@@ -7,6 +7,7 @@ import com.example.Citronix.model.Tree;
 import com.example.Citronix.service.impl.TreeService;
 import com.example.Citronix.service.interf.TreeServiceInterface;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/trees")
+@RequiredArgsConstructor
 public class TreeController {
 
-    @Autowired
-    private TreeServiceInterface treeService;
+     private final TreeServiceInterface treeService;
 
     @PostMapping
     public ResponseEntity<String> createTree(@Valid @RequestBody TreeCreateDTO treeCreateDTO) {

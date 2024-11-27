@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SaleService implements SaleServiceInterface {
 
     private final SaleRepository saleRepository;
@@ -35,6 +36,7 @@ public class SaleService implements SaleServiceInterface {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public SaleDTO getSaleById(Long id) {
         Sale sale = saleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("La vente avec l'ID " + id + " n'existe pas."));
@@ -42,8 +44,7 @@ public class SaleService implements SaleServiceInterface {
     }
 
     @Override
-    @Transactional
-    public Sale createSale(SaleCreateDTO saleCreateDTO) {
+     public Sale createSale(SaleCreateDTO saleCreateDTO) {
          Harvest harvest = harvestRepository.findById(saleCreateDTO.getHarvestId())
                 .orElseThrow(() -> new IllegalArgumentException("Récolte non trouvée pour l'ID: " + saleCreateDTO.getHarvestId()));
 
@@ -63,8 +64,7 @@ public class SaleService implements SaleServiceInterface {
     }
 
     @Override
-    @Transactional
-    public Sale updateSale(Long id, SaleUpdateDTO saleUpdateDTO) {
+     public Sale updateSale(Long id, SaleUpdateDTO saleUpdateDTO) {
          Sale existingSale = saleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Vente non trouvée pour l'ID : " + id));
 
@@ -84,8 +84,7 @@ public class SaleService implements SaleServiceInterface {
     }
 
     @Override
-    @Transactional
-    public void deleteSale(Long id) {
+     public void deleteSale(Long id) {
          if (!saleRepository.existsById(id)) {
             throw new IllegalArgumentException("La vente avec l'ID " + id + " n'existe pas.");
         }
